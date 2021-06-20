@@ -1,0 +1,282 @@
+num=input('enter a numer:')
+sum=0
+for i in num:
+    sum+=int(i)
+print(sum)
+
+def greater(a,b):
+    if a>b:
+        return a
+    else:
+        return b
+def greatest(a,b,c):
+    if greater(a,b)<c:
+        return c
+def grt(a,b,c):
+    big=greater(a,b)
+    return greater(big,c)
+
+print(greatest(5,6,7)) 
+print(grt(1,-1,0))
+
+num= int(input('enter a range'))
+a=0
+b=1
+i=0
+if num==0:
+    print(a)
+elif num==1:
+    print(a,b)
+else:
+    print(a,b,end=' ')
+    while i < num-1:
+        c=a+b
+        a=b
+        b=c
+        i+=1
+        print(c,end=' ')    
+print()   
+
+num=int(input('enter a num'))
+def fibo(num):
+    a=0
+    b=1
+    i=0
+    if num==0:
+        print(a)
+    elif num==1:
+        print(a,b)
+    else:
+        print(a,b,end=' ')
+        while i < num-1:
+            c=a+b
+            a=b
+            b=c
+            i+=1
+            print(c,end=' ')  
+    
+fibo(num)    
+
+def inf(f_name,l_name='none', age=' none'):
+    print('you f name is',f_name)
+    print('your l name is',l_name)
+    print('your age is',age)
+inf('pou')
+
+# SCOPE
+def fun():
+9    x=3
+    return x
+def fun1():
+    return x
+fun()
+
+#Raw string formating
+print(r'hellow \n mantu')
+
+#input multiple number with split method
+a,b=(input('enter firstnum and second number')).split(',')
+print(f'first number {a}')
+print(b)
+
+#Different Type of print statement
+name='pou'
+age=25
+print('hello ' + name + ' your age is '+ str(age))
+print('hello {} your age is {}'.format(name,age))
+print(f'hello {name} your age is {age}')
+print('hello',name + ' your age is',age+1 )
+
+#replace method
+string='she is a beautiful girl'
+print(string.replace("s", 'd',1))
+string.find('bea')
+
+#Center method
+name='pourav'
+name.center(len(name)+7,'*')
+
+#joint method
+user_info='pourav 24'
+spl=user_info.split(',')
+print(spl)
+list1=['pourav sahoo','24']
+info=','.join(list1)
+info
+
+# function returning two value
+def func1(a,b):
+    add=a+b
+    multi=a*b
+    return add,multi
+func1(5,6)
+add, mul=func1(5,6)
+print(add)
+
+#Dictionary
+user1={'name':'pou','age':24,'movie':['a','b','c']}
+user1['name']
+user1['age']
+user1['movie'][1]
+user1={'name':{'fname':'pou','lname':'sahoo'}}
+user1['name']['fname']
+user2={}
+user2['sal']={'mon':100,'teu':200}
+print(user2)
+user2['sal']['mon']
+#del1=user1.pop('name')
+#print(del1)
+if 'name' in user1:
+    print('pr')
+else:
+    print('npr')
+if 24 in user1.values():
+    print('pr')
+else:
+    print('npr')
+# VALUE, ITEM, METHOD    
+user1={'name':'pou','age':24,'movie':['a','b','c']}
+if 'pou' in user1.values():
+    print('p')
+else:
+    print('a')
+print(user1.items())
+for i in user1.values():
+    print(i)
+for i,j in user1.items():
+    print(f'key is {i} and value is {j}')
+    
+user1={'name':'pou','age':24,'movie':['a','b','c']}
+user1['song']='perfect'
+#del1=user1.pop('name')
+#type(del1)
+del2=user1.popitem()
+type(del2)
+user1={'name':'pou','age':24,'movie':['a','b','c']}
+user2['sal']={'mon':100,'teu':200}
+user1.update(user2)
+print(user1)
+
+d=dict.fromkeys('acbn','unknown')
+d
+
+d={'name':'pou','age':24,'movie':['a','b','c']}
+print(d.get('name'))
+print(d['name'])
+d1=d.copy()
+d1.popitem()
+d1
+d
+
+#list comprihension
+l=[]
+for i in range(1,11):
+    l.append(i**2)
+print(l)
+l2=[i**2 for i in range(1,11)]
+print(l2)
+
+l=[]
+for i in range(1,11):
+    l.append(-i)
+print(l)    
+l1=[-i for i in range(1,11)]
+print(l1)
+
+#List comprehension with IF statement
+num=list(range(1,11))
+num=[i for i in num if i%2==0]
+num1=[]
+for i in num:
+    if i%2==0:
+        num1.append(i)
+print(num1)        
+
+#list comprehension with IF ELSE Statement
+def func(num):
+    nums=[]
+    for i in num:
+        if i%2==0:
+            nums.append(i*2)
+        else:
+            nums.append(-i)
+    return nums        
+#func(list(range(1,11)))
+def func1(l):
+    return [2*i  if i%2==0 else -i for i in l]
+func1(list(range(1,11)))
+
+#NESTED LIST with list comprehension
+num=[[i for i in range(1,4)] for j in range(3)]
+num
+
+#dictionary comprehension
+dict1={f' square of {n}':n**2 for n in range(1,11)}
+for k ,v in dict1.items():
+    print(f'{k} is {v}')
+
+#Character Count with dictionary comprehension
+d1={}
+for i in name:
+    v=name.count(i)
+    d1[i]=v
+print(d1)   
+name='Pourav Kumar Sahoo'
+d={char:name.count(char) for char in name }
+print(d)
+
+#IF ELSE with dictionary comprehension
+d3={i:'even' if i%2==0 else 'odd' for i in range(1,11)}
+print(d3)
+
+#set coprehension
+s1={1,2,3,4,}
+print(type(s1))
+
+s2={i**2 for i in range(3)}
+s2
+
+#STAR ARGS(*Args)
+def add(*args):
+    t=0
+    for i in args:
+        t+=i
+    return t    
+add(1,2,4,6,7,8)
+
+#star args as normal parameter which always return as a tuple
+def mnum(num,*args):
+    m=1
+    for i in args:
+        m*=i
+    return m,num
+    
+mnum(3,4,5,6)
+
+#star args as argumrnts
+def func(*args):
+    m=1
+    for i in  args:
+        m*=i
+    return m
+num=3,5,7,2
+func(*num) #to unpack value list/tuple
+
+def po(n,*m):
+    if m:
+        return [i**n for i in m]
+    else:
+        print('the pass list is empty')
+
+l=[2,3,4,5]
+po(*l) 
+
+#Keyword arguments(**kwargs) which always return as dictionary 
+def name(**n):
+    return n
+print(name(fname='pou',lname='sahoo'))
+d={'fname':'pou','lname':'sahoo'}
+name(**d)
+
+   
+    
