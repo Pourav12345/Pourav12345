@@ -417,3 +417,87 @@ student={
 }
 
 max(student,key=lambda d:student[d]['name'])
+
+#Sorted Function
+l=['a','v','d']
+l1=('a','v','d')
+l.sort(reverse=1)
+print(sorted(l1))
+
+s=[
+    {'name':'abc','score':42,'age':44},
+    {'name':'jknm','score':23,'age':18},
+    {'name':'ab','score':14,'age':33}
+
+]
+sorted(s, key= lambda d:d.get('age'))
+
+s1={
+    'e':{'name':'abc','score':42,'age':44},
+    'b':{'name':'jknm','score':23,'age':18},
+    'c':{'name':'ab','score':14,'age':33}    
+}
+sorted(s1,key= lambda d:s1[d]['name'])
+
+#Writing Docstring
+def add(a,b):
+    '''this will return the sum of the passed argument
+    '''
+    return a+b
+add.__doc__
+
+#pass function as a argument
+def add(a,b):
+    return a+b
+a=add
+a(4,6)
+print(a)
+print(add)
+l=[5,2,3,4]
+def square(a):
+    return a**2
+#print(list(map(square, l)))
+def my_sq(func,l):
+    
+    l1=[]
+    for i in l:
+        l1.append(func(i))
+    return l1
+#my_sq(square,l)
+
+def my_sq1(func,l):
+    return [func(i) for i in l]
+my_sq1(square,l)
+
+#function returning function Called as closures
+def outer():
+    def inner():
+        print('abc')
+    return inner
+v=outer()
+
+def outer1(a):
+    def inner1():
+        print('the msg is:',a)
+    return inner1
+v1=outer1('fvnsjrnonvns')
+v1()
+
+def func1(po):
+    def func2(num):
+        return num**po
+    return func2
+n=func1(2)
+n(3)
+
+#DECORATORS is to enhance the functionality(important topic)
+def decorators(any_func):
+    def wrapper_func():
+        print('this is decorators')
+        any_func()
+    return wrapper_func
+@ decorators
+def func():
+    print('this is func')
+func()
+    
