@@ -278,5 +278,142 @@ print(name(fname='pou',lname='sahoo'))
 d={'fname':'pou','lname':'sahoo'}
 name(**d)
 
+def rev(*l,**d):
+    if d=={'rev':'true'}:
+        return [i[::-1].title() for i in l]
+    else:
+        return [i[::-1] for i in l]
+l=['porav','kumar','sahoo']        
+rev(*l,rev='true')            
+
+#LAMBDA EXPRESSION Defining Function in one line
+add = lambda a,b:a+b
+add(3,4)    
+
+def is_even(n):
+    return n%2==0
+        
+is_even(3)   
+even=lambda n:n%2==0
+print(even(4))
+func=lambda n: 'even' if n%2==0 else 'odd'
+func(11)
+
+#lambda expression with if else statement
+def func(s):
+    if len(s)>5:
+        return 'large str'
+    return 'small str'
+func('pourav')    
+func1= lambda s: 'large str' if len(s)>5 else 'small str'
+func1('mantu')
    
-    
+#ENUMERATE FUNCTION
+def pos(*l):
+    po=0
+    for i in l:
+        print(f'{po} -->',i)
+        po+=1 
+l1=['abc','jkl','xyz']         
+def  fun(l,find):
+    for pos,l in enumerate(l):
+        if l==find:
+            return pos
+    return -1   
+fun(['abc','jkl','xyz'],'abj' )
+
+# MAP FUNCTION
+sq=lambda a:a**2
+l1=[sq(i) for i in range(2,7)]
+print(l1)    
+q=list(map(sq,range(7,13)))
+print(q)
+
+# filter Function
+def iseven(l):
+    l1=[]
+    for i in l:
+        if i%2==0:
+            l1.append(i)
+    return l1
+iseven([1,2,3,4,5])
+ 
+#with filter
+def eve(l):
+    return l%2==0
+tuple(filter(eve,range(1,10)))
+#with lambda and filter
+print(tuple(filter(lambda a:a%2==0 , range(1,10))))
+
+q=(map(lambda a:a**2,range(7,13)))
+print(next(q))
+print(next(q))
+
+
+#Iterator VS Iterable
+n=[1,2,3,4,5,6]
+#for i in n:
+    #print(i)
+num=iter(n)    
+print(next(num))
+print(next(num))
+print(next(num))
+
+#zip function
+l1=[1,2,3,4,5]
+l2=('a','b','c','d','e')
+print(list(zip(l1,l2)))
+
+l=[(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd'), (5, 'e')]
+l1,l2=zip(*l)
+l1,l2
+
+l1=[1,2,3,4,5]
+l2=[4,5,2,3,8]
+l=[]
+for i in zip(l1,l2):
+    l.append(max(i))
+print(l)    
+
+def fun(*l):
+    l2=[]
+    for i in range(1):
+        p=list(zip(*l))
+        for j in p:
+            av=sum(j)/len(l)
+            l2.append(av)
+    return l2 
+l1=([1,2,3],[2,4,5],[4,5,6])
+fun(*l1)
+
+funj= lambda *l: [sum(i)/len(i) for i in zip(*l)]
+funj([1,2,3],[2,4,5],[4,5,6])
+
+#ANY & ALL FUNCTION
+def add(*args):
+    if all([type(i)==int or type(i)==float for i in args]):
+        ad=0
+        for i in args:
+            ad+=i
+        return ad
+    else: return 'wrong input'
+add(2,3,4,5,6,4.5)
+
+#ADVANCE MIN MAX FUNCTION
+name=['abc','abcd','abcde','wertyurt']
+min(name)
+student=[
+    {'name':'abc','score':42,'age':44},
+    {'name':'jknm','score':23,'age':18},
+    {'name':'ab','score':14,'age':33}
+
+]
+max(student,key=(lambda d:d['score']))['name']
+
+student={
+    'a':{'name':'abc','score':42,'age':44},
+    'b':{'name':'jknm','score':23,'age':18},
+    'c':{'name':'ab','score':14,'age':33}    
+}
+
+max(student,key=lambda d:student[d]['name'])
