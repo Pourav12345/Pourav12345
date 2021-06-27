@@ -500,4 +500,371 @@ def decorators(any_func):
 def func():
     print('this is func')
 func()
+
+from functools import wraps
+def dec(an):
+    @wraps(an)
+    def wr(*a):
+        '''this is dec'''
+        print('this is decorators')
+        return an(*a)
+    return wr
+@dec    
+def add(*n):
+    '''this is add'''
+    return sum(n)
+add(2,3,4,5)
+add.__doc__
+
+from functools import wraps
+def deco(an):
+    @wraps(an)
+    def wrap(*a):
+        print(f'you are calling {an.__name__} function')
+        print(an.__doc__)
+        return an(*a)
+    return wrap
+@ deco
+def add(a,b):
+    '''this function takes two value and give there sum'''
+    return a+b
+add(5,4)
+
+#calculate TIME
+import time
+from functools import wraps
+def dec(an):
+    @wraps(an)
+    def wrap(*a):
+        print(f'you are using {an.__name__} function')
+        t1=time.time()
+        returned=an(*a)
+        t2=time.time()
+        t=t2-t1
+        print(f'this function take {t} much second')
+        return returned
+    return wrap
+@dec        
+def od_ev(n):
+    if n%2==0:
+        return 'even'
+    return 'odd'
+
+@dec
+def sq(n):
+    return [i**2 for i in range(1,n+1)]
+sq(5)
+
+def dec(an):
+    def wrap(*a):
+        data_type=[]
+        for i in a:
+            data_type.append(type(i)==int)
+        if all(data_type):
+            return an(*a)
+        else: print('wrong input')
+    return wrap
     
+@dec
+def add(*args):
+    total=0
+    for i in args:
+        total+=i
+    return total
+add(1,2,3,[1,2])   
+
+# DECORATORS WITH ARGUMENTS
+def only_datatype(data_type):
+    def dec(an):
+        def wrap(*a):
+            d=[]
+            for i in a:
+                d.append(type(i)==data_type)
+            if all(d):
+                return an(*a)
+            else: print('wrong input')
+        return wrap
+    return dec
+@only_datatype(int)
+def str_con(*s):
+    st=0
+    for i in s:
+        st+=i
+    return st 
+print(str_con(2,3,4))
+
+# GENERATOR is same like ITERATORS
+def fun(n):
+    for i in range(n):
+        yield(i)
+num=fun(5)        
+for i in num:
+    print(i)
+for i in num:
+    print(i)    
+
+#Generator comprehension instade of square bracket use parenthesis
+sq=(i**2 for i in range(5000000))
+sq
+
+#OBJECT ORIENTED PROGRAMMING--(OOP)(class,method,instance=object)
+#CREATE CLASS
+class Person:
+    def __init__(self,first_name,last_name,age):
+        #create instance variable
+        self.first_name=first_name
+        self.last_name=last_name
+        self.age=age
+        self.full_name=first_name+' '+ last_name
+#CREATE OBJECT
+p1=Person('pourav','sahoo',25)
+p1.first_name
+p1.full_name
+
+class Laptop:
+    def __init__(self,brand_name,ram,price):
+        self.B=brand_name
+        self.ram=ram
+        self.price=price
+lap1=Laptop('HP','8gb','40k')    
+lap1.price
+
+#CREATE INSTANCE(OBJECT) METHODS
+class Person:
+    def __init__(self,first_name,last_name,age):
+        self.fname=first_name
+        self.lname=last_name
+        self.age=age
+    def full_name(self,m):
+        return (f'{self.fname} {m} {self.lname}')
+    def is_18(self):
+        if self.age>18:
+            return 'adult'
+        return 'minor'
+p1=Person('pourav','sahoo',25) 
+p1.full_name('kumar')
+Person.full_name(p1,'ku.')
+p1.is_18()
+
+class laptop:
+    def __init__(self, brand_name,ram,price):
+        self.brand_name=brand_name
+        self.ram=ram
+        self.price=price
+    def discount(self,n):
+        return self.price-(self.price*(n/100))
+lap1=laptop('hp','8gb',500000)    
+lap1.ram
+lap1.discount(40)
+laptop.discount(lap1,20)
+
+#CLASS VARIABLE IS LIKE GLOBAL VARIABLE
+class Circle:
+    pi=3.14
+    def __init__(self,radius):
+        self.radius=radius
+    def area(self):
+        return Circle.pi*(self.radius**2)
+    def circum(self):
+        return 2*Circle.pi*self.radius
+cir1=Circle(3)
+cir2=Circle(5)
+cir1.area()
+cir1.circum()
+cir2.circum()
+
+class Person:
+    count=0
+    def __init__(self,name):
+        Person.count+=1
+        self.name=name
+    def count_instance(self):
+        return Person.count
+p1=Person('pourav')
+p2=Person('mantu')
+p1.count_instance()
+
+class Laptop:
+    dis=10
+    def __init__(self,brand_name,ram,price):
+        self.bname=brand_name
+        self.ram=ram
+        self.p=price
+    def disc(self):
+        return self.p-(self.p*(self.dis/100))
+Laptop.dis=30
+lap2=Laptop('dell','4gb',50000)
+lap1=Laptop('hp','8gb',60000)
+lap1.dis=40
+lap1.__dict__
+lap1.disc()
+
+#Class Method is like Global Method used a decorator name @classmethod
+class Person:
+    count=0
+    def __init__(self, name):
+        Person.count+=1
+        self.name=name
+    @classmethod
+    def instance_count(cls):
+        return f'you have created {Person.count} instance of {cls.__name__} class'
+p1=Person('pourav')
+p1=Person('sahoo')
+Person.instance_count()
+
+#Class Method as a Constructor
+class Person:
+    def __init__(self, fname,lname,age):
+        self.fname=fname
+        self.lname=lname
+        self.age=age
+    def full_name(self):
+        return f'{self.fname} {self.lname}'
+    @classmethod
+    def fr_str(cls,string):
+        fnam,lname,age=string.split(',')
+        return cls(fnam,lname,age)
+p1=Person('pourav','sahoo',25)
+p1.full_name()
+p2=Person.fr_str('mantu,sahoo,24')
+p2.full_name()
+
+#Static Method is not related to class or object
+class Person:
+    def __init__(self,fname,lname,age):
+        self.fname=fname
+        self.lname=lname
+        self.age=age
+    @staticmethod
+    def hello():
+        return 'hello static method is called'
+p1=Person('pourav','kumar',25)
+#Person.hello()
+p1.hello()
+
+#Encapsulation, Abstraction, Name Mangling
+class Phone:
+    def __init__(self, brand, model_name,price):
+        self.brand=brand
+        self.model_name=model_name
+        self._price=price #(self._price is a naming convention)
+        def make_a_call(self,phone_number):
+            print(f'{phone_number } is calling ....')
+        def full_name(self):
+            return f'{self.brand} {self.model_name}'
+ph1=Phone('nokia',1100, 2000)
+
+ph1.__dict__
+ph1._Phone__price
+
+
+#OOP Property and setter decorater
+class Phone:
+    def __init__(self, brand, model_name,price):
+        self.brand=brand
+        self.model_name=model_name
+        if price>0: # for no negative value
+            self._price=price #(self._price is a naming convention)
+        else: self._price=0 
+#TO set Price to only posotive value we use first @property(getter method) then setter decorator
+    @property
+    def price(self):
+        return self._price
+    @price.setter
+    def price(self, n_price):
+         self._price=max(n_price,0)
+            
+    @property    #no need to call as function    
+    def specification(self):
+        return f'{self.brand} {self.model_name} and price is {self._price}'
+    def make_a_call(self,phone_number):
+        print(f'{phone_number } is calling ....')
+    def full_name(self):
+        return f'{self.brand} {self.model_name}'
+ph1=Phone('nokia',1100, -2000)
+ph1._price=-12
+print(ph1.price)
+#print(ph1.specification())
+ph1.specification
+
+
+#Inheritance OOPS
+class phone: #(base class or parent class )
+    def __init__(self,brand,model,price):
+        self.brand=brand
+        self.model=model
+        self.price=price
+    def full_name(self):
+        return f'{self.model} {self.brand}'
+
+    
+class smartphone(phone): # To inharitate phone class in to smartphone class (derived class or child class)
+    def __init__(self,brand,model,price,ram,memory):
+        #phone.__init__(self,brand,model,price) # no need to build the constuctor oh phone class again
+        super().__init__(brand,model,price) # second method is 'super methodno need to declare self'
+        self.ram=ram
+        self.memory=memory
+    def specification(self):
+        return f'{self.brand} {self.model} and ram is {self.ram}'
+    
+p1=phone('nokia',1100,2000)  
+sp1=smartphone('samsung','S3',12000,'4gb','16gb')
+
+sp1.brand  
+sp1.specification()
+sp1.full_name()
+    
+     
+#multileve Inheritance
+class phone: 
+    def __init__(self,brand,model,price):
+        self.brand=brand
+        self.model=model
+        self.price=price
+    def full_name(self):
+        return f'{self.model} {self.brand}'
+
+    
+class smartphone(phone):
+    def __init__(self,brand,model,price,ram,memory):
+        #phone.__init__(self,brand,model,price) # no need to build the constuctor oh phone class again
+        super().__init__(brand,model,price) # second method is 'super methodno need to declare self'
+        self.ram=ram
+        self.memory=memory
+    def specification(self):
+        return f'{self.brand} {self.model} and ram is {self.ram}'
+class iphone(smartphone): # Multilevel inheritance 
+    def __init__(self,brand,model,price,ram,memory,operator):
+        smartphone.__init__(self,brand,model,price,ram,memory)
+        self.operator=operator
+    def iphone_sp(self):
+        return f'{self.brand} {self.model} {self.operator}ram is{self.ram}'
+            
+    
+p1=phone('nokia',1100,2000)  
+sp1=smartphone('samsung','S3',12000,'4gb','16gb')
+ip1=iphone('apple','12mini',70000,'12gb','128gb','iOS')
+ip1.full_name()
+ip1.iphone_sp()
+    
+     
+#MRO (method resolution order)
+print(ip1.full_name())
+#help(iphone)
+
+ #ISINSTANCE and ISSUBCLASS (to check whether the objct is present)
+isinstance('S3',smartphone) 
+issubclass(smartphone,phone)
+
+#without Creating instance variable
+class A:
+    def class_a_method(self):
+        return f'hello i am class {A.__name__}'
+class B:
+    def class_b_method(self):
+        return f'hello i am class {B.__name__}'
+class C(A,B):
+    pass
+instance_c=C()
+instance_c.class_b_method()
+print(C.mro())
