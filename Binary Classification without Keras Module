@@ -1,0 +1,86 @@
+import numpy as np 
+import matplotlib.pyplot as plt
+import random
+def draw(x1,x2):
+    plt.plot(x1,x2)
+def sigmoid(x):
+    return 1/(1+(np.exp(-x)))
+def calculate_error(line_parameter,pts,y):
+    proba= sigmoid(pts*line_parameter)
+    m=all_pts.shape[0]
+    cross_entropy = -(1/m)*(np.log(proba).T*y + np.log(1-proba).T*(1-y))
+    return cross_entropy
+def gradient_descent(line_parameter,pts,y,alpha):
+    m=all_pts.shape[0]
+    for i in range(500):
+        proba= sigmoid(pts*line_parameter)
+
+        gradient= (pts.T*(proba-y))*(alpha/m)
+        line_parameter=line_parameter-gradient
+        w1=line_parameter.item(0)
+        w2=line_parameter.item(1)
+        b=line_parameter.item(2)
+        x1=np.array([pts[:,0].min(),pts[:,0].max()])
+        x2=-(x1*(w1/w2)+b/w2)
+    draw(x1,x2)
+n_pts = 10
+np.random.seed(0)
+bias=np.ones(n_pts)
+random_x1_values = np.random.normal(10, 2, n_pts)
+random_x2_values= np.random.normal(12,2,n_pts)
+random_y1_values = np.random.normal(5,2,n_pts)
+random_y2_values = np.random.normal(6,2,n_pts)
+top_rgn = np.array([random_x1_values , random_x2_values,bias]).T
+bottom_rgn = np.array([random_y1_values,random_y2_values,bias]).T
+all_pts=np.vstack((top_rgn ,bottom_rgn))
+w1=-0.2
+w2=-0.35
+b=3.5
+line_parameter = np.matrix([w1,w2,b]).T
+x1=np.array([bottom_rgn[:,0].min(),top_rgn[:,0].max()])
+#x1w1+x2w2+b=0
+x2=-(x1*(w1/w2)+b/w2)
+x1,x2
+y=np.array([np.zeros(n_pts),np.ones(n_pts)]).reshape(2*n_pts,1)
+#print(y)
+#print(line_parameter.shape)
+#print(all_pts.shape)
+#print(type(line_parameter))
+#print(all_pts)
+#print(all_pts.shape[0])
+linear_combintion = all_pts * line_parameter
+#print(linear_combintion)
+proba= sigmoid(linear_combintion)
+#print(np.log(proba).T)
+#print(np.log(1-proba).T)
+
+print(calculate_error(line_parameter,all_pts,y))
+
+fig,ax=plt.subplots(figsize=(4,4))
+ax.scatter(top_rgn[:,0],top_rgn[:,1],color='r')
+plt.scatter(bottom_rgn[:,0],bottom_rgn[:,1],color='b')
+draw(x1,x2)
+
+n_pts = 100
+np.random.seed(0)
+bias=np.ones(n_pts)
+random_x1_values = np.random.normal(10, 2, n_pts)
+random_x2_values= np.random.normal(12,2,n_pts)
+random_y1_values = np.random.normal(5,2,n_pts)
+random_y2_values = np.random.normal(6,2,n_pts)
+top_rgn = np.array([random_x1_values , random_x2_values,bias]).T
+bottom_rgn = np.array([random_y1_values,random_y2_values,bias]).T
+all_pts=np.vstack((top_rgn ,bottom_rgn))
+line_parameter = np.matrix(np.zeros(3)).T
+y=np.array([np.zeros(n_pts),np.ones(n_pts)]).reshape(2*n_pts,1)
+
+
+fig,ax=plt.subplots(figsize=(4,4))
+ax.scatter(top_rgn[:,0],top_rgn[:,1],color='r')
+plt.scatter(bottom_rgn[:,0],bottom_rgn[:,1],color='b')
+print(calculate_error(line_parameter,all_pts,y))
+gradient_descent(line_parameter,all_pts,y,1)
+
+
+    
+    
